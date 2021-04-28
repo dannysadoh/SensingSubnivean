@@ -1,0 +1,38 @@
+#define outA 2 //A+
+  float vel = 0;
+  volatile byte counter = 0;
+  unsigned long staT = 0;
+  unsigned long stoT = 0;
+
+
+
+void setup() {
+  //define pins 
+  pinMode(outA, INPUT_PULLUP);  
+
+  //set serial communication speed
+  Serial.begin(115200);
+
+  // encoder A channel on interrupt 0 (Arduino's pin 2)
+  attachInterrupt(0, doEncoderA, RISING);
+  interrupts();  //allow interrupts
+}
+
+void loop() {
+  staT = 0;
+  stoT = 0;
+  counter = 0;
+  staT = micros(); //start counter
+  while (counter < 100) { //loop until
+  }
+  stoT = micros();
+  float vel = counter * 1000000 / (stoT - staT);     //calculate velocity
+  Serial.println(vel);
+}
+
+//counter 250 results in ~100ms integr time and a variation of ~5
+
+
+void doEncoderA()  {
+counter = counter+1;
+}
